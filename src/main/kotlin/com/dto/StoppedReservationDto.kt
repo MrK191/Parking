@@ -4,7 +4,7 @@ import com.model.DriverType
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-class EndedReservationDto(
+class StoppedReservationDto(
         val id: Long,
 
         val driverType: DriverType,

@@ -22,7 +22,7 @@ class ReservationCalculator {
         }
     }
 
-    fun calculateExtraHours(reservationHours: Long, parkingRate: ParkingRate): BigDecimal {
+    private fun calculateExtraHours(reservationHours: Long, parkingRate: ParkingRate): BigDecimal {
 
         var result: BigDecimal = parkingRate.secondHour
         var currentHour: Long = parkingRate.secondHour.longValueExact()

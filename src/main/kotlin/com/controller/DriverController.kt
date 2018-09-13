@@ -1,9 +1,9 @@
 package com.controller
 
-import com.dto.EndedReservationDto
 import com.dto.ReservationManager
 import com.dto.ReservationRequest
 import com.dto.StartedReservationDto
+import com.dto.StoppedReservationDto
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
@@ -25,7 +25,7 @@ class DriverController(private val reservationManager: ReservationManager) {
 
 
     @PutMapping("/stop")
-    private fun stopReservation(@RequestParam reservationId: Long): EndedReservationDto =
+    private fun stopReservation(@RequestParam reservationId: Long): StoppedReservationDto =
             reservationManager.stopReservation(reservationId, LocalDateTime.now())
 
 

@@ -14,8 +14,8 @@ class ReservationConverter {
                 currencyCode = reservation.currencyCode)
     }
 
-    fun convertToReservationEndedDto(reservation: Reservation): EndedReservationDto {
-        return EndedReservationDto(id = reservation.id,
+    fun convertToReservationEndedDto(reservation: Reservation): StoppedReservationDto {
+        return StoppedReservationDto(id = reservation.id,
                 driverType = reservation.driverType,
                 carLicensePlate = reservation.carLicensePlate,
                 startTime = reservation.startTime,

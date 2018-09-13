@@ -1,9 +1,9 @@
 package com
 
-import com.dto.EndedReservationDto
 import com.dto.ReservationConverter
 import com.dto.ReservationManager
 import com.dto.StartedReservationDto
+import com.dto.StoppedReservationDto
 import com.excpetion.ReservationAlreadyStartedException
 import com.model.ReservationDao
 import com.util.ReservationCalculator
@@ -46,7 +46,7 @@ class ReservationManagerTest extends Specification implements ReservationExample
         reservationDao.findById(_ as Long) >> Optional.ofNullable(startedReservation)
 
         when:
-        EndedReservationDto reservationDto = reservationManager.stopReservation(1L,
+        StoppedReservationDto reservationDto = reservationManager.stopReservation(1L,
                 LocalDateTime.of(2018, Month.FEBRUARY, 1, 12, 30, 00))
 
         then:
@@ -67,7 +67,6 @@ class ReservationManagerTest extends Specification implements ReservationExample
 
     def "should return correct earnings for owner for specific day"() {
         given:
-
         reservationDao.findReservationsForGivenDay(_, _) >> Arrays.asList(oneHourRegularReservation,
                 twoHoursRegularReservation,
                 twoHoursVipReservation)
@@ -82,10 +81,10 @@ class ReservationManagerTest extends Specification implements ReservationExample
         given:
         reservationDao.findStartedReservation(_) >> oneHourRegularReservation
 
-        when: "operator checks car"
-        def startedParkingmeter = reservationManager.isParkingmeterStarted("ABC1")
+        when:
+        Boolean isParkingmeterStarted = reservationManager.isParkingmeterStarted("ABC1")
 
-        then: "system return response that there is parked car"
-        startedParkingmeter
+        then:
+        isParkingmeterStarted
     }
 }

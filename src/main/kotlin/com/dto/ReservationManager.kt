@@ -30,7 +30,7 @@ class ReservationManager(private val reservationDao: ReservationDao,
     }
 
     @Transactional
-    fun stopReservation(reservationId: Long, endTime: LocalDateTime): EndedReservationDto {
+    fun stopReservation(reservationId: Long, endTime: LocalDateTime): StoppedReservationDto {
         val reservation = reservationDao.findById(reservationId)
 
         return reservation
