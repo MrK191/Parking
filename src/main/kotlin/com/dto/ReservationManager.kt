@@ -21,7 +21,7 @@ class ReservationManager(private val reservationDao: ReservationDao,
     @Transactional
     fun createReservation(reservationRequest: ReservationRequest, startTime: LocalDateTime): StartedReservationDto {
 
-        Optional.ofNullable(reservationDao.findStartedReservationByLicensePlate(reservationRequest.carLicensePlate))
+        Optional.ofNullable(reservationDao.findStartedReservation(reservationRequest.carLicensePlate))
                 .ifPresent { throw ReservationAlreadyStartedException(reservationRequest.carLicensePlate) }
 
         return reservationConverter.convertToModel(reservationRequest, startTime)
@@ -51,10 +51,10 @@ class ReservationManager(private val reservationDao: ReservationDao,
                 .orElseThrow { ReservationNotFoundException(reservationId) }
     }
 
-    fun isParkingmeterStarted(licenseId: String): Boolean = reservationDao.findStartedReservationByLicensePlate(licenseId) != null
+    fun isParkingmeterStarted(licenseId: String): Boolean = reservationDao.findStartedReservation(licenseId) != null
 
     fun retrieveDailyEarnings(date: LocalDate): BigDecimal {
-        return reservationDao.findByStartTimeAfterAndEndTimeBefore(date.atStartOfDay(), date.plusDays(1).atStartOfDay())
+        return reservationDao.findReservationsForGivenDay(date.atStartOfDay(), date.plusDays(1).atStartOfDay())
                 .map { it.cost }
                 .fold(BigDecimal.ZERO, BigDecimal::add)
     }
